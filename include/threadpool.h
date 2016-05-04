@@ -1,10 +1,9 @@
 #ifndef __THREAD_POOL_H__
 #define __THREAD_POOL_H__
 
-#include <thread.h>
+#include <pthread.h>
 
-#include <string>
-#include <list>
+#include <vector>
 #include <deque>
 
 namespace ZY
@@ -18,7 +17,7 @@ namespace ZY
 	class CThreadPool
 	{
 	public:
-		CThreadPool(int iSize);
+		CThreadPool(int iSize, int iMaxSize);
 		~CThreadPool();
 		
 	public:
@@ -35,8 +34,8 @@ namespace ZY
 		pthread_cond_t m_cond;					// Condition
 		std::vector<pthread_t> m_vecThreads;	// Threads
 		std::deque<Task> m_deqTask;				// Tasks
-		int m_iMaxThread;						// The max number of ThreadPool's threads
 		int m_iThreadNum;						// The number of ThreadPool's threads
+		int m_iMaxThread;						// The max number of ThreadPool's threads
 		bool m_bStart;							// ThreadPool's state
 	};
 };

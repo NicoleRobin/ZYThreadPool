@@ -10,12 +10,9 @@ namespace ZY
 		{
 			pthread_mutex_lock(&(pThreadPool->m_mutex));
 
-			while (!pThreadPool->m_bShutDown)
-			{
-				pthread_cond_wait(&(pThreadPool->m_cond), &(pThreadPool->m_mutex));
-			}
+			pthread_cond_wait(&(pThreadPool->m_cond), &(pThreadPool->m_mutex));
 
-			if (pThreadPool->m_bShutDown)
+			if (!pThreadPool->m_bStart)
 			{
 				break;
 			}
@@ -28,7 +25,7 @@ namespace ZY
 			(*(task.func))(task.arg);
 		}
 
-		pthread_mutex_unlock(pThreadPool->m_mutex);
+		pthread_mutex_unlock(&(pThreadPool->m_mutex));
 		pthread_exit(NULL);
 		return NULL;
 	}
@@ -47,13 +44,13 @@ namespace ZY
 	int CThreadPool::Start()
 	{
 		m_bStart = true;
-		pthread_mutex_init(&m_mutext);
-		pthread_cond_init(&m_mutext);
+		pthread_mutex_init(&m_mutex, NULL);
+		pthread_cond_init(&m_cond, NULL);
 
 		pthread_t tid = 0;
 		for (int i = 0;i < m_iThreadNum; ++i)
 		{
-			if (0 != pthread_create(&tid, NULL, ThreadFunc, NULL))
+			if (0 != pthread_create(&tid, NULL, ThreadFunc, this))
 			{
 				return -1;
 			}
@@ -86,7 +83,7 @@ namespace ZY
 		m_deqTask.push_back(*task);
 		pthread_mutex_unlock(&m_mutex);
 
-		pthread_cond_single(&m_cond);
+		pthread_cond_signal(&m_cond);
 
 		return 0;
 	}

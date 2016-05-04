@@ -1,6 +1,8 @@
 #include "threadpool.h"
-
+#include "unistd.h"
 #include <iostream>
+#include <cstdio>
+
 using namespace std;
 
 void Print(void *arg)
@@ -20,11 +22,15 @@ int main(int argc, char **args)
 	ZY::CThreadPool pool(4, 10);
 	pool.Start();
 
+	ZY::Task task;
+	task.func = Print;
 	for (int i = 0; i < 100; ++i)
 	{
-		pool.AddTask(Print, *i);
+		task.arg = &i;
+		pool.AddTask(&task);
 	}
 
+	getchar();
 	pool.Stop();
 
 	return 0;
