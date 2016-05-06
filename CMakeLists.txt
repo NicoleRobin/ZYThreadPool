@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 2.6)
 
-#set(CMAKE_VERBOSE_MAKEFILE on)
 set(CMAKE_CXX_COMPILER "g++")
-set(CMAKE_BUILD_TYPE "Debug")
-set(CMAKE_CXX_FLAGS_DEBUG "-Wall -g")
 
 project(ZYThreadPool)
+
+set(CMAKE_VERBOSE_MAKEFILE on)
+set(CMAKE_CXX_FLAGS "-Wall -g")
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
