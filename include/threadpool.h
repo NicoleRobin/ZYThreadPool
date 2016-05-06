@@ -17,7 +17,7 @@ namespace ZY
 	class CThreadPool
 	{
 	public:
-		CThreadPool(int iSize, int iMaxSize);
+		CThreadPool(int iSize);
 		~CThreadPool();
 		
 	public:
@@ -35,7 +35,6 @@ namespace ZY
 		std::vector<pthread_t> m_vecThreads;	// Threads
 		std::deque<Task> m_deqTask;				// Tasks
 		int m_iThreadNum;						// The number of ThreadPool's threads
-		int m_iMaxThread;						// The max number of ThreadPool's threads
 		bool m_bStart;							// ThreadPool's state
 	};
 };

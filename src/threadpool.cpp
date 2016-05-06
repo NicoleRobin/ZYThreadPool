@@ -33,8 +33,8 @@ namespace ZY
 		return NULL;
 	}
 
-	CThreadPool::CThreadPool(int iSize, int iMaxSize)
-		: m_iThreadNum(iSize), m_iMaxThread(iMaxSize), m_bStart(false)
+	CThreadPool::CThreadPool(int iSize)
+		: m_iThreadNum(iSize), m_bStart(false)
 	{
 
 	}

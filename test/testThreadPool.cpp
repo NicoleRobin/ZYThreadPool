@@ -1,5 +1,7 @@
 #include "threadpool.h"
-#include "unistd.h"
+#include <unistd.h>
+#include <pthread.h>
+
 #include <iostream>
 #include <cstdio>
 
@@ -7,21 +9,22 @@ using namespace std;
 
 void Print(void *arg)
 {
+	pthread_t tid = pthread_self();
 	int *piTask = (int*)arg;
 	for (int i = 0; i < 10; ++i)
 	{
-		cout << "Task " << *piTask << endl;
+		cout << "tid:" << tid << " Task:" << *piTask << endl;
 		sleep(*piTask + 1);
 	}
 
-	cout << "Task " << *piTask << " end" << endl;
+	cout << "tid:" << tid << " Task " << *piTask << " end" << endl;
 
 	delete piTask;
 }
 
 int main(int argc, char **args)
 {
-	ZY::CThreadPool pool(4, 10);
+	ZY::CThreadPool pool(4);
 	pool.Start();
 
 	// sleep(2);
