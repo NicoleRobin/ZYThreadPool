@@ -10,7 +10,10 @@ namespace ZY
 		{
 			pthread_mutex_lock(&(pThreadPool->m_mutex));
 
-			pthread_cond_wait(&(pThreadPool->m_cond), &(pThreadPool->m_mutex));
+			while (pThreadPool->m_deqTask.empty() && pThreadPool->m_bStart)
+			{
+				pthread_cond_wait(&(pThreadPool->m_cond), &(pThreadPool->m_mutex));
+			}
 
 			if (!pThreadPool->m_bStart)
 			{
@@ -77,10 +80,10 @@ namespace ZY
 		return 0;
 	}
 
-	int CThreadPool::AddTask(Task *task)
+	int CThreadPool::AddTask(Task task)
 	{
 		pthread_mutex_lock(&m_mutex);
-		m_deqTask.push_back(*task);
+		m_deqTask.push_back(task);
 		pthread_mutex_unlock(&m_mutex);
 
 		pthread_cond_signal(&m_cond);

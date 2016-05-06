@@ -24,7 +24,7 @@ namespace ZY
 		// initialize the thread pool
 		int Start();
 		int Stop();
-		int AddTask(Task *task);
+		int AddTask(Task task);
 		
 	private:
 		static void* ThreadFunc(void *arg);

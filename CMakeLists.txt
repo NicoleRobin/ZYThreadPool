@@ -4,7 +4,7 @@ set(CMAKE_CXX_COMPILER "g++")
 
 project(ZYThreadPool)
 
-set(CMAKE_VERBOSE_MAKEFILE on)
+#set(CMAKE_VERBOSE_MAKEFILE on)
 set(CMAKE_CXX_FLAGS "-Wall -g")
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
